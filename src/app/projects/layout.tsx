@@ -8,7 +8,7 @@ export default function ProjectsLayout({
   return (
     <>
       <NavBar />
-      <main className="p-4 pt-20 min-h-screen container mx-auto">
+      <main className="p-4 pt-16 min-h-screen">
         {children}
       </main>
     </>

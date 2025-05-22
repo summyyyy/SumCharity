@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { Modal, Button, NumberInput, Group, Text, Stack } from "@mantine/core";
+import { Modal, NumberInput, Text } from "@mantine/core";
 import { getContract, prepareContractCall } from "thirdweb";
 import { useSendTransaction } from "thirdweb/react";
 import { client } from "@/app/client";
 import { sepolia } from "thirdweb/chains";
+import { CurrencyDollarIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
 interface DonationModalProps {
   projectId: number;
@@ -68,39 +69,94 @@ export default function DonationModal({
   };
 
   return (
-    <Modal opened={isOpen} onClose={onClose} title="Donate to Project" centered>
-      <Stack>
-        <Text size="sm" c="dimmed">
+    <Modal
+      opened={isOpen}
+      onClose={onClose}
+      title={
+        <h3 className="text-xl font-bold text-amber-800">Donate to Project</h3>
+      }
+      centered
+      styles={{
+        header: {
+          backgroundColor: "rgb(254 243 199 / 0.7)",
+          borderBottom: "1px solid rgb(251 191 36 / 0.3)",
+          padding: "1rem 1.5rem",
+        },
+        body: {
+          padding: "1.5rem",
+        },
+        content: {
+          borderRadius: "0.75rem",
+          boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
+          border: "1px solid rgb(251 191 36 / 0.3)",
+        },
+      }}
+    >
+      <div className="space-y-6">
+        <Text className="text-gray-600">
           Enter the amount you would like to donate to this project
         </Text>
 
-        <NumberInput
-          label="Donation Amount (Wei)"
-          placeholder="Enter amount"
-          value={donationAmount}
-          onChange={(val) =>
-            setDonationAmount(typeof val === "number" ? val : undefined)
-          }
-          min={1}
-          max={maxDonationAmount}
-          step={1}
-          hideControls
-          required
-        />
+        <div>
+          <label className="font-medium text-sm text-amber-800 mb-2 block">
+            Donation Amount (Wei)
+          </label>
+          <NumberInput
+            placeholder="Enter amount"
+            value={donationAmount}
+            onChange={(val) =>
+              setDonationAmount(typeof val === "number" ? val : undefined)
+            }
+            min={1}
+            max={maxDonationAmount}
+            step={1}
+            hideControls
+            required
+            styles={{
+              input: {
+                borderColor: "rgb(251 191 36 / 0.3)",
+                "&:focus": {
+                  borderColor: "rgb(245 158 11)",
+                },
+                borderRadius: "0.5rem",
+              },
+            }}
+          />
+        </div>
 
-        <Group justify="flex-end" mt="md">
-          <Button
-            variant="outline"
+        <div className="flex justify-between gap-3 mt-8">
+          <button
             onClick={onClose}
             disabled={isSubmitting || isPending}
+            className="px-6 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition-all duration-300 font-medium flex items-center gap-1 disabled:opacity-50 disabled:cursor-not-allowed"
           >
+            <XMarkIcon className="h-4 w-4" />
             Cancel
-          </Button>
-          <Button onClick={handleDonate} loading={isSubmitting || isPending}>
-            Donate
-          </Button>
-        </Group>
-      </Stack>
+          </button>
+          <button
+            onClick={handleDonate}
+            disabled={
+              !donationAmount ||
+              donationAmount <= 0 ||
+              isSubmitting ||
+              isPending
+            }
+            className="px-6 py-2 bg-amber-500 rounded-lg text-white hover:bg-amber-600 transition-all duration-300 font-bold shadow-md hover:shadow-amber-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1"
+          >
+            {isSubmitting || isPending ? (
+              <>
+                <div className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full mr-1"></div>
+                Processing...
+              </>
+            ) : (
+              <>
+                <CurrencyDollarIcon className="h-4 w-4" />
+                Donate
+              </>
+            )}
+          </button>
+        </div>
+      </div>
     </Modal>
   );
 }

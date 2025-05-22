@@ -6,7 +6,6 @@ import { MantineProvider, createTheme } from "@mantine/core";
 import "@mantine/core/styles.css";
 import "@mantine/dates/styles.css";
 
-
 const inter = Inter({ subsets: ["latin"] });
 
 const theme = createTheme({
@@ -14,9 +13,8 @@ const theme = createTheme({
 });
 
 export const metadata: Metadata = {
-  title: "thirdweb SDK + Next starter",
-  description:
-    "Starter template for using thirdweb SDK with Next.js App router",
+  title: "SumCharity",
+  description: "A blockchain-based charity platform",
 };
 
 export default function RootLayout({

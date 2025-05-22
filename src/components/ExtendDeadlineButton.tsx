@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@mantine/core";
+import { CalendarIcon } from "@heroicons/react/24/outline";
 import ExtendDeadlineModal from "./ExtendDeadlineModal";
 
 interface ExtendDeadlineButtonProps {
@@ -34,9 +34,13 @@ export default function ExtendDeadlineButton({
 
   return (
     <>
-      <Button onClick={() => setIsModalOpen(true)} color="yellow" size="md">
+      <button
+        onClick={() => setIsModalOpen(true)}
+        className="px-6 py-3 bg-amber-600 rounded-lg text-white hover:bg-amber-700 transition-all duration-300 font-bold shadow-md hover:shadow-amber-200 flex items-center gap-2"
+      >
+        <CalendarIcon className="h-5 w-5" />
         Extend Deadline
-      </Button>
+      </button>
 
       <ExtendDeadlineModal
         projectId={projectId}
