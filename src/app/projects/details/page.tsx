@@ -31,7 +31,7 @@ function ProjectDetailContent() {
   const contract = getContract({
     client: client,
     chain: sepolia,
-    address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS!,
+    address: "0xE2DBd6a6f549A500320EB1F6CEce2C12d9b9c71f",
   });
 
   const { data: project, isPending } = useReadContract({
